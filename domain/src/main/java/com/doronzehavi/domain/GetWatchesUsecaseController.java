@@ -14,7 +14,6 @@ public class GetWatchesUsecaseController implements GetWatchesUsecase {
     private final WatchDataSource mDataSource;
 
 
-    // Registers to the data bus, and posts to ui bus
     public GetWatchesUsecaseController(WatchDataSource dataSource, Bus uiBus) {
         if (dataSource == null)
             throw new IllegalArgumentException("MediaDataSource cannot be null");
@@ -23,13 +22,16 @@ public class GetWatchesUsecaseController implements GetWatchesUsecase {
             throw new IllegalArgumentException("Bus cannot be null");
         mDataSource = dataSource;
         mUiBus = uiBus;
-        BusProvider.getDataBusInstance().register(this);
+        BusProvider.getDataBusInstance().register(this); // Registers to the data bus
     }
 
+    /**
+     *     Receives watches from data bus here.
+    */
     @Subscribe
     @Override
-    public void onWatchesReceived(WatchesWrapper response) { // Receives watches from data bus
-        sendWatchesToPresenter(response);
+    public void onWatchesReceived(WatchesWrapper response) {
+        sendWatchesToPresenter(response); // Then sends them via the UI bus to the presenter
     }
 
     @Override

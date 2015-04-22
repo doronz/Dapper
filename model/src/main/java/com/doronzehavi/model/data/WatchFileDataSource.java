@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by D on 4/21/2015.
+ * This class provides access to the user's watches.
  */
 public class WatchFileDataSource implements WatchDataSource {
 

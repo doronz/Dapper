@@ -3,7 +3,6 @@ package com.doronzehavi.dapper.views.activities;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -60,7 +59,6 @@ public class MainActivity extends ActionBarActivity implements MainView {
     protected void onStart() { // This is where the action starts.
         super.onStart();
         mMainPresenter.start();
-        Log.d("Dapper", "Presenter started.");
     }
 
     @Override
@@ -68,7 +66,10 @@ public class MainActivity extends ActionBarActivity implements MainView {
         List<Watch> watchesList = watches.getWatches();
         StringBuilder sb = new StringBuilder();
         for (Watch watch : watchesList) {
-            sb.append(watch.getId() + " : " + watch.getBackground() + '\n');
+            sb.append(watch.getId());
+            sb.append(" : ");
+            sb.append(watch.getBackground());
+            sb.append('\n');
         }
         mText.setText(sb.toString());
     }

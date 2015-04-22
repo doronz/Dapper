@@ -17,8 +17,10 @@ public class MainPresenter extends Presenter{
     private final MainView mMainView;
     private GetWatchesUsecaseController mGetWatches;
 
+    // Constructor for the presenter
     public MainPresenter(MainView mainView){
         mMainView = mainView;
+        // Loads up it's first task: Getting watches from the model.
         mGetWatches = new GetWatchesUsecaseController(
                 WatchFileDataSource.getInstance(), BusProvider.getUIBusInstance());
     }
@@ -32,6 +34,7 @@ public class MainPresenter extends Presenter{
 
     @Override
     public void start() {
+        Log.d("Dapper", "Presenter started.");
         BusProvider.getUIBusInstance().register(this);
         mGetWatches.execute();
     }
