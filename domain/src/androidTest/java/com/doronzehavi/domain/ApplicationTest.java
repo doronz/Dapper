@@ -1,4 +1,4 @@
-package com.doronzehavi.domain;
+package com.doronzehavi.dapper.domain;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

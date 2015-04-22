@@ -1,4 +1,4 @@
-package com.doronzehavi.model;
+package com.doronzehavi.dapper.model;
 
 /**
  * Created by D on 4/21/2015.

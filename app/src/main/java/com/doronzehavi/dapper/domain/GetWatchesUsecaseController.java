@@ -1,8 +1,8 @@
-package com.doronzehavi.domain;
+package com.doronzehavi.dapper.domain;
 
-import com.doronzehavi.common.utils.BusProvider;
-import com.doronzehavi.model.WatchDataSource;
-import com.doronzehavi.model.entities.WatchesWrapper;
+import com.doronzehavi.dapper.common.utils.BusProvider;
+import com.doronzehavi.dapper.model.WatchDataSource;
+import com.doronzehavi.dapper.model.entities.WatchesWrapper;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -22,11 +22,14 @@ public class GetWatchesUsecaseController implements GetWatchesUsecase {
             throw new IllegalArgumentException("Bus cannot be null");
         mDataSource = dataSource;
         mUiBus = uiBus;
-        BusProvider.getDataBusInstance().register(this); // Registers to the data bus
+        /**
+         *  1) Registers to the data bus here.
+         */
+        BusProvider.getDataBusInstance().register(this);
     }
 
     /**
-     *     Receives watches from data bus here.
+     * 2) Receives watches from data bus here.
     */
     @Subscribe
     @Override
@@ -39,6 +42,10 @@ public class GetWatchesUsecaseController implements GetWatchesUsecase {
         mDataSource.getWatches();
     }
 
+
+    /**
+     * 3) Forwards them to the presenter via the UI bus here.
+     */
     @Override
     public void sendWatchesToPresenter(WatchesWrapper response) {
         mUiBus.post(response);

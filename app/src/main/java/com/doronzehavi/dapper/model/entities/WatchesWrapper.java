@@ -1,4 +1,4 @@
-package com.doronzehavi.model.entities;
+package com.doronzehavi.dapper.model.entities;
 
 import java.io.Serializable;
 import java.util.List;
