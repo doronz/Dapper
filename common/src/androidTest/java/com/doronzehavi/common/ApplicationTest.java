@@ -1,4 +1,4 @@
-package com.doronzehavi.common;
+package com.doronzehavi.dapper.common;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

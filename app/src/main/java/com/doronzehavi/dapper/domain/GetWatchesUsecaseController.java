@@ -1,8 +1,8 @@
-package com.doronzehavi.domain;
+package com.doronzehavi.dapper.domain;
 
-import com.doronzehavi.common.utils.BusProvider;
-import com.doronzehavi.model.WatchDataSource;
-import com.doronzehavi.model.entities.WatchesWrapper;
+import com.doronzehavi.dapper.common.utils.BusProvider;
+import com.doronzehavi.dapper.model.WatchDataSource;
+import com.doronzehavi.dapper.model.entities.WatchesWrapper;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -14,7 +14,6 @@ public class GetWatchesUsecaseController implements GetWatchesUsecase {
     private final WatchDataSource mDataSource;
 
 
-    // Registers to the data bus, and posts to ui bus
     public GetWatchesUsecaseController(WatchDataSource dataSource, Bus uiBus) {
         if (dataSource == null)
             throw new IllegalArgumentException("MediaDataSource cannot be null");
@@ -23,13 +22,19 @@ public class GetWatchesUsecaseController implements GetWatchesUsecase {
             throw new IllegalArgumentException("Bus cannot be null");
         mDataSource = dataSource;
         mUiBus = uiBus;
+        /**
+         *  1) Registers to the data bus here.
+         */
         BusProvider.getDataBusInstance().register(this);
     }
 
+    /**
+     * 2) Receives watches from data bus here.
+    */
     @Subscribe
     @Override
-    public void onWatchesReceived(WatchesWrapper response) { // Receives watches from data bus
-        sendWatchesToPresenter(response);
+    public void onWatchesReceived(WatchesWrapper response) {
+        sendWatchesToPresenter(response); // Then sends them via the UI bus to the presenter
     }
 
     @Override
@@ -37,6 +42,10 @@ public class GetWatchesUsecaseController implements GetWatchesUsecase {
         mDataSource.getWatches();
     }
 
+
+    /**
+     * 3) Forwards them to the presenter via the UI bus here.
+     */
     @Override
     public void sendWatchesToPresenter(WatchesWrapper response) {
         mUiBus.post(response);

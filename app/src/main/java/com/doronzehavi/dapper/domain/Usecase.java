@@ -1,4 +1,4 @@
-package com.doronzehavi.domain;
+package com.doronzehavi.dapper.domain;
 
 
 public interface Usecase {

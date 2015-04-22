@@ -1,6 +1,6 @@
-package com.doronzehavi.domain;
+package com.doronzehavi.dapper.domain;
 
-import com.doronzehavi.model.entities.WatchesWrapper;
+import com.doronzehavi.dapper.model.entities.WatchesWrapper;
 
 /**
  * Rrepresentation of the usecase that loads up all the watches.
