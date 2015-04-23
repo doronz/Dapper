@@ -5,9 +5,6 @@ package com.doronzehavi.dapper.mvp.presenters;
  */
 public abstract class Presenter {
 
-    /**
-     *
-     */
     public abstract void start();
 
     public abstract void stop();

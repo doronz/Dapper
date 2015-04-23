@@ -24,7 +24,7 @@
         android:layout_width="match_parent"/>
 
     <FrameLayout
-        android:id="@+id/activity_main_fragment_holder"
+        android:id="@+id/activity_main_fragment_config_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

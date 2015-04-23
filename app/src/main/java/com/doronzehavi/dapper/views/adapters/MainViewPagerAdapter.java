@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.doronzehavi.dapper.views.fragments.WatchViewFragment;
 import com.doronzehavi.dapper.model.entities.Watch;
+import com.doronzehavi.dapper.views.fragments.WatchViewFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,10 @@ public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return mWatchViewFragmentList.get(position);
+        if (mWatchViewFragmentList != null && mWatchViewFragmentList.size() > position)
+            return mWatchViewFragmentList.get(position);
+        else
+            return null;
     }
 
     @Override

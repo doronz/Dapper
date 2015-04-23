@@ -20,8 +20,8 @@ import java.util.Map;
  */
 public class WatchFileDataSource implements WatchDataSource {
 
-    private static final Map<String, Bitmap> MAP_BACKGROUND = getBackgrounds();
-    private static Map<String, Bitmap> getBackgrounds(){
+    private static final Map<String, Bitmap> MAP_BACKGROUND = loadBackgrounds();
+    private static Map<String, Bitmap> loadBackgrounds(){
         HashMap<String, Bitmap> backgrounds = new HashMap<>();
         // Gray
         Bitmap BITMAP_BACKGROUND_GRAY = BitmapFactory.decodeResource(Dapper.getContext().getResources(), Constants.RES_BACKGROUND_GRAY);
@@ -33,6 +33,10 @@ public class WatchFileDataSource implements WatchDataSource {
         backgrounds.put(Constants.KEY_BACKGROUND_GRAY, BITMAP_BACKGROUND_GRAY);
         backgrounds.put(Constants.KEY_BACKGROUND_GOLD, BITMAP_BACKGROUND_GOLD);
         return backgrounds;
+    }
+
+    public Map<String, Bitmap> getBackgrounds() {
+        return MAP_BACKGROUND;
     }
 
     public Bitmap getBackgroundBitmap(String key){
@@ -55,14 +59,13 @@ public class WatchFileDataSource implements WatchDataSource {
      */
     @Override
     public void getWatches() {
-        createDefaultWatches();
+        BusProvider.getDataBusInstance().post(createDefaultWatches());
     }
 
-    public void createDefaultWatches() {
-       List<Watch> watches = new ArrayList<>();
+    public WatchesWrapper createDefaultWatches()  {
+        List<Watch> watches = new ArrayList<>();
         watches.add(new Watch(Constants.KEY_BACKGROUND_GRAY));
         watches.add(new Watch(Constants.KEY_BACKGROUND_GOLD));
-        WatchesWrapper response = new WatchesWrapper(watches);
-        BusProvider.getDataBusInstance().post(response);
+        return new WatchesWrapper(watches);
     }
 }

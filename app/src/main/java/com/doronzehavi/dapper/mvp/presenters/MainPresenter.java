@@ -28,17 +28,6 @@ public class MainPresenter extends Presenter{
     }
 
     /**
-     * 3) Watches are received. The presenter now displays them on the view.
-     */
-    @Subscribe
-    public void onWatchesReceived(WatchesWrapper response) { // receives watches from ui bus
-        Log.d("Dapper", "Presenter received watches.");
-        mMainView.showWatches(response);
-        mMainView.hideLoading();
-    }
-
-
-    /**
      * 2) Executes the Usecase and registers for events to listen for watches received.
      */
     @Override
@@ -48,6 +37,17 @@ public class MainPresenter extends Presenter{
         mMainView.showLoading();
         mGetWatches.execute();
     }
+
+    /**
+     * 3) Watches are received. The presenter now displays them on the view.
+     */
+    @Subscribe
+    public void onWatchesReceived(WatchesWrapper response) { // receives watches from ui bus
+        Log.d("Dapper", "Presenter received watches.");
+        mMainView.showWatches(response);
+        mMainView.hideLoading();
+    }
+
 
     @Override
     public void stop() {

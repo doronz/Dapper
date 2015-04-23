@@ -7,6 +7,8 @@ import com.doronzehavi.dapper.R;
  */
 public class Constants {
 
+    public static final String TAG = "Dapper";
+
     public static final String USER_DATA_PATH = "user_data.ser";
     public static final String KEY_WATCH = "watch";
 

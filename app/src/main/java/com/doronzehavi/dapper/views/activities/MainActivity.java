@@ -4,14 +4,18 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.doronzehavi.dapper.R;
+import com.doronzehavi.dapper.common.utils.Constants;
 import com.doronzehavi.dapper.model.entities.WatchesWrapper;
 import com.doronzehavi.dapper.mvp.presenters.MainPresenter;
 import com.doronzehavi.dapper.mvp.views.MainView;
 import com.doronzehavi.dapper.views.adapters.MainViewPagerAdapter;
+import com.doronzehavi.dapper.views.fragments.WatchConfigFragment;
+import com.doronzehavi.dapper.views.fragments.WatchViewFragment;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -27,9 +31,10 @@ public class MainActivity extends ActionBarActivity implements MainView {
     private MainViewPagerAdapter mAdapter;
 
     // Loads xml views
-    @InjectView(R.id.activity_main_toolbar)     Toolbar mToolbar;
-    @InjectView(R.id.activity_main_progress)    ProgressBar mProgressBar;
-    @InjectView(R.id.activity_main_view_pager)  ViewPager mPager;
+    @InjectView(R.id.activity_main_toolbar)                 Toolbar mToolbar;
+    @InjectView(R.id.activity_main_progress)                ProgressBar mProgressBar;
+    @InjectView(R.id.activity_main_view_pager)              ViewPager mPager;
+    //@InjectView(R.id.activity_main_fragment_config_holder)  FrameLayout mConfigLayout;
 
 
     @Override
@@ -43,7 +48,7 @@ public class MainActivity extends ActionBarActivity implements MainView {
 
         mAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mAdapter);
-
+        mPager.setOnPageChangeListener(pageChangeListener);
 
         /**
          * 1) Loads up the presenter
@@ -56,6 +61,40 @@ public class MainActivity extends ActionBarActivity implements MainView {
             mMainPresenter = new MainPresenter(this);
         }
     }
+
+    private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            Log.d(Constants.TAG, "ViewPager: page " + position + " selected. Loading config.");
+            WatchViewFragment watchViewFragment = (WatchViewFragment) mAdapter.getItem(position);
+            updateConfigFragment(watchViewFragment);
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
+
+    public void loadConfigFragment(WatchViewFragment watchViewFragment) {
+        if (watchViewFragment != null) {
+            WatchConfigFragment watchConfigFragment = WatchConfigFragment.newInstance(watchViewFragment.getWatch());
+            getSupportFragmentManager().beginTransaction().add(R.id.activity_main_fragment_config_holder, watchConfigFragment).commit();
+        }
+    }
+
+    private void updateConfigFragment(WatchViewFragment watchViewFragment) {
+        if (watchViewFragment != null) {
+            WatchConfigFragment watchConfigFragment = WatchConfigFragment.newInstance(watchViewFragment.getWatch());
+            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_fragment_config_holder, watchConfigFragment).commit();
+        }
+    }
+
 
     @Override
     protected void onStop() {
@@ -75,12 +114,14 @@ public class MainActivity extends ActionBarActivity implements MainView {
 
     /**
      * Called by the presenter once it receives new watches
-     * @param watches the use's watches which are then displayed by the view
+     * @param watches the user's watches which are then displayed by the view
      */
     @Override
     public void showWatches(WatchesWrapper watches) {
         mAdapter.loadWatches(watches.getWatches());
+        loadConfigFragment((WatchViewFragment) mAdapter.getItem(0));
     }
+
 
 
     @Override
