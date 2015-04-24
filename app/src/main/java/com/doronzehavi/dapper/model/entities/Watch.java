@@ -7,12 +7,15 @@ import java.io.Serializable;
  */
 public class Watch implements Serializable {
 
+    // Instance variables
     private String backgroundKey;
 
+    // Constructor
     public Watch(String backgroundKey){
         this.backgroundKey = backgroundKey;
     }
 
+    // Getters
     public String getBackgroundKey() {
         return backgroundKey;
     }

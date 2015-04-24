@@ -45,6 +45,7 @@ public class MainPresenter extends Presenter{
     public void onWatchesReceived(WatchesWrapper response) { // receives watches from ui bus
         Log.d("Dapper", "Presenter received watches.");
         mMainView.showWatches(response);
+        mMainView.loadConfigFragment();
         mMainView.hideLoading();
     }
 

@@ -9,6 +9,8 @@ import com.doronzehavi.dapper.model.entities.WatchesWrapper;
 public interface MainView {
     void showWatches(WatchesWrapper watches);
 
+    void loadConfigFragment();
+
     void showLoading();
 
     void hideLoading();

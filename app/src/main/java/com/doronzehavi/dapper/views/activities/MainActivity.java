@@ -1,15 +1,14 @@
 package com.doronzehavi.dapper.views.activities;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.doronzehavi.dapper.R;
-import com.doronzehavi.dapper.common.utils.Constants;
 import com.doronzehavi.dapper.model.entities.WatchesWrapper;
 import com.doronzehavi.dapper.mvp.presenters.MainPresenter;
 import com.doronzehavi.dapper.mvp.views.MainView;
@@ -29,12 +28,13 @@ public class MainActivity extends ActionBarActivity implements MainView {
 
     private MainPresenter mMainPresenter;
     private MainViewPagerAdapter mAdapter;
+    private WatchViewFragment mCurrWatchFragment;
 
     // Loads xml views
     @InjectView(R.id.activity_main_toolbar)                 Toolbar mToolbar;
     @InjectView(R.id.activity_main_progress)                ProgressBar mProgressBar;
     @InjectView(R.id.activity_main_view_pager)              ViewPager mPager;
-    //@InjectView(R.id.activity_main_fragment_config_holder)  FrameLayout mConfigLayout;
+
 
 
     @Override
@@ -70,9 +70,8 @@ public class MainActivity extends ActionBarActivity implements MainView {
 
         @Override
         public void onPageSelected(int position) {
-            Log.d(Constants.TAG, "ViewPager: page " + position + " selected. Loading config.");
-            WatchViewFragment watchViewFragment = (WatchViewFragment) mAdapter.getItem(position);
-            updateConfigFragment(watchViewFragment);
+            mCurrWatchFragment = (WatchViewFragment) mAdapter.instantiateItem(mPager, position);
+            loadConfigFragment();
         }
 
         @Override
@@ -81,37 +80,6 @@ public class MainActivity extends ActionBarActivity implements MainView {
         }
     };
 
-    public void loadConfigFragment(WatchViewFragment watchViewFragment) {
-        if (watchViewFragment != null) {
-            WatchConfigFragment watchConfigFragment = WatchConfigFragment.newInstance(watchViewFragment.getWatch());
-            getSupportFragmentManager().beginTransaction().add(R.id.activity_main_fragment_config_holder, watchConfigFragment).commit();
-        }
-    }
-
-    private void updateConfigFragment(WatchViewFragment watchViewFragment) {
-        if (watchViewFragment != null) {
-            WatchConfigFragment watchConfigFragment = WatchConfigFragment.newInstance(watchViewFragment.getWatch());
-            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_fragment_config_holder, watchConfigFragment).commit();
-        }
-    }
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mMainPresenter.stop();
-    }
-
-
-    /**
-     * 2) Starts the presenter
-     */
-    @Override
-    protected void onStart() { // This is where the action starts.
-        super.onStart();
-        mMainPresenter.start();
-    }
-
     /**
      * Called by the presenter once it receives new watches
      * @param watches the user's watches which are then displayed by the view
@@ -119,10 +87,30 @@ public class MainActivity extends ActionBarActivity implements MainView {
     @Override
     public void showWatches(WatchesWrapper watches) {
         mAdapter.loadWatches(watches.getWatches());
-        loadConfigFragment((WatchViewFragment) mAdapter.getItem(0));
+        mCurrWatchFragment = (WatchViewFragment) mAdapter.instantiateItem(mPager, mPager.getCurrentItem());
+        loadConfigFragment();
     }
 
+    @Override
+    protected void onStart() { // This is where the action starts.
+        super.onStart();
+        mMainPresenter.start();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mMainPresenter.stop();
+    }
+
+    public void loadConfigFragment(){
+        if (mCurrWatchFragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.activity_main_fragment_config_holder,
+                    WatchConfigFragment.newInstance(mCurrWatchFragment.getWatch()));
+            ft.commit();
+        }
+    }
 
     @Override
     public void showLoading() {
