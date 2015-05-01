@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
+import com.doronzehavi.dapper.common.utils.Constants;
 import com.doronzehavi.dapper.common.utils.Utils;
 import com.doronzehavi.dapper.model.data.WatchFileDataSource;
 import com.doronzehavi.dapper.model.entities.Watch;
@@ -44,7 +46,11 @@ public class WatchView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mWatch != null && mBackgroundBitmap != null){
+            Log.d(Constants.TAG, "Drawing watch!");
             drawWatch(canvas, canvas.getWidth(), canvas.getHeight());
+        }
+        else {
+            Log.e(Constants.TAG, "Either mWatch or mBackgroundBitmap are null in onDraw!");
         }
     }
 

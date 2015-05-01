@@ -3,10 +3,10 @@ package com.doronzehavi.dapper.mvp.presenters;
 import android.util.Log;
 
 import com.doronzehavi.dapper.common.utils.BusProvider;
-import com.doronzehavi.dapper.mvp.views.MainView;
 import com.doronzehavi.dapper.domain.GetWatchesUsecaseController;
 import com.doronzehavi.dapper.model.data.WatchFileDataSource;
 import com.doronzehavi.dapper.model.entities.WatchesWrapper;
+import com.doronzehavi.dapper.mvp.views.MainView;
 import com.squareup.otto.Subscribe;
 
 /**
@@ -45,10 +45,8 @@ public class MainPresenter extends Presenter{
     public void onWatchesReceived(WatchesWrapper response) { // receives watches from ui bus
         Log.d("Dapper", "Presenter received watches.");
         mMainView.showWatches(response);
-        mMainView.loadConfigFragment();
         mMainView.hideLoading();
     }
-
 
     @Override
     public void stop() {

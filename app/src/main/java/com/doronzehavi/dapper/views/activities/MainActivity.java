@@ -1,20 +1,20 @@
 package com.doronzehavi.dapper.views.activities;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.doronzehavi.dapper.R;
+import com.doronzehavi.dapper.common.utils.Constants;
 import com.doronzehavi.dapper.model.entities.WatchesWrapper;
 import com.doronzehavi.dapper.mvp.presenters.MainPresenter;
 import com.doronzehavi.dapper.mvp.views.MainView;
 import com.doronzehavi.dapper.views.adapters.MainViewPagerAdapter;
 import com.doronzehavi.dapper.views.fragments.WatchConfigFragment;
-import com.doronzehavi.dapper.views.fragments.WatchViewFragment;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -28,7 +28,6 @@ public class MainActivity extends ActionBarActivity implements MainView {
 
     private MainPresenter mMainPresenter;
     private MainViewPagerAdapter mAdapter;
-    private WatchViewFragment mCurrWatchFragment;
 
     // Loads xml views
     @InjectView(R.id.activity_main_toolbar)                 Toolbar mToolbar;
@@ -70,8 +69,7 @@ public class MainActivity extends ActionBarActivity implements MainView {
 
         @Override
         public void onPageSelected(int position) {
-            mCurrWatchFragment = (WatchViewFragment) mAdapter.instantiateItem(mPager, position);
-            loadConfigFragment();
+            updateMainFrag(position);
         }
 
         @Override
@@ -87,8 +85,24 @@ public class MainActivity extends ActionBarActivity implements MainView {
     @Override
     public void showWatches(WatchesWrapper watches) {
         mAdapter.loadWatches(watches.getWatches());
-        mCurrWatchFragment = (WatchViewFragment) mAdapter.instantiateItem(mPager, mPager.getCurrentItem());
-        loadConfigFragment();
+        /**
+         * This is used to populate the config fragment when watches are loaded.
+         */
+        mPager.post(new Runnable(){
+            @Override
+            public void run() {
+                pageChangeListener.onPageSelected(mPager.getCurrentItem());
+                Log.d(Constants.TAG, "Notifying pagechangelistner of the current page being selected.");
+            }
+        });
+    }
+
+
+    @Override
+    public void updateMainFrag(int position) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_fragment_holder,
+                WatchConfigFragment.newInstance(mAdapter.getFragment(position).getWatch()))
+                .commit();
     }
 
     @Override
@@ -101,15 +115,6 @@ public class MainActivity extends ActionBarActivity implements MainView {
     protected void onStop() {
         super.onStop();
         mMainPresenter.stop();
-    }
-
-    public void loadConfigFragment(){
-        if (mCurrWatchFragment != null) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.activity_main_fragment_config_holder,
-                    WatchConfigFragment.newInstance(mCurrWatchFragment.getWatch()));
-            ft.commit();
-        }
     }
 
     @Override

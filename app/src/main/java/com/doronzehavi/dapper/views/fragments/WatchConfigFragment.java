@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.doronzehavi.dapper.R;
 import com.doronzehavi.dapper.common.utils.Constants;
@@ -78,26 +79,7 @@ public class WatchConfigFragment extends Fragment implements ConfigView {
 
     @Override
     public void loadConfig() {
-        Log.d(Constants.TAG, "mWatch == null? " + String.valueOf(mWatch == null));
-
-
-
-        /*Log.d(Constants.TAG, "WatchConfigFragment: loadFragmentLayout()");
-        // 1) Get the grid layout for background options
-        GridLayout watch_backgrounds_layout = (GridLayout) mContainer.findViewById(R.id.watch_background_grid_layout);
-        // 2) For each background option...
-        for (Map.Entry<String, Bitmap> entry : dataSource.getBackgrounds().entrySet()) {
-            // 3) Create a config button
-            ConfigButton bg_button = new ConfigButton(getActivity());
-            // 4) Set that config button's background to the background option it represents
-            bg_button.setBackground(new BitmapDrawable(getActivity().getResources(), entry.getValue()));
-            // 5) If the background of the selected watch is the same as that of this button, disable the button so that it cannot be chosen.
-            if (mWatch.getBackgroundKey().equals(entry.getKey())) {
-                bg_button.setEnabled(false);
-            } else {
-                bg_button.setEnabled(true);
-            }
-            watch_backgrounds_layout.addView(bg_button);
-        }*/
+        TextView header = (TextView) getView().findViewById(R.id.watch_config_header_text);
+        header.setText("Watch == null?  --" + String.valueOf(mWatch == null).toUpperCase() + "--");
     }
 }

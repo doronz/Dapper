@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Dapper</string>
+
+
+    <string-array name="witty_text_array">
+        <item>Can\'t go wrong with this one.</item>
+        <item>This one really brings out your eyes.</item>
+        <item>Good choice.</item>
+        <item>Bold decision.</item>
+        <item>This one will impress.</item>
+        <item>Another wise choice.</item>
+        <item>This one will look great with your new suit.</item>
+    </string-array>
+
 </resources>

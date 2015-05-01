@@ -3,6 +3,7 @@ package com.doronzehavi.dapper.views.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class WatchViewFragment extends Fragment implements WatchFaceView {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.i(Constants.TAG, "WatchViewFragment.onCreateView()");
         mContainer = inflater.inflate(R.layout.fragment_watch_view, container, false);
         mPresenter = new WatchViewFragmentPresenter(this);
         return mContainer;
@@ -33,10 +35,12 @@ public class WatchViewFragment extends Fragment implements WatchFaceView {
     @Override
     public void onStart() {
         super.onStart();
+        Log.d(Constants.TAG, "WatchViewFragment.onStart()");
         mPresenter.start();
     }
 
     public void updateWatch(){
+        Log.d(Constants.TAG, "WatchViewFragment.updateWatch()");
         WatchView mWatchView = (WatchView) mContainer.findViewById(R.id.watch_view);
         mWatchView.setWatch(mWatch);
     }
@@ -46,7 +50,7 @@ public class WatchViewFragment extends Fragment implements WatchFaceView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d(Constants.TAG, "WatchViewFragment.onCreate()");
         Bundle args = getArguments();
         if (args != null) {
             mWatch = (Watch) args.getSerializable(Constants.KEY_WATCH);
@@ -63,9 +67,13 @@ public class WatchViewFragment extends Fragment implements WatchFaceView {
     }
 
     public WatchViewFragment() {
+        Log.d(Constants.TAG, "WatchViewFragment()");
     }
 
     public Watch getWatch() {
         return mWatch;
     }
+
+
+
 }

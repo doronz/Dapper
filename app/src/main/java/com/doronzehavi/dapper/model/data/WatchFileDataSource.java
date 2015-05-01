@@ -2,6 +2,7 @@ package com.doronzehavi.dapper.model.data;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.doronzehavi.dapper.Dapper;
 import com.doronzehavi.dapper.common.utils.BusProvider;
@@ -60,6 +61,7 @@ public class WatchFileDataSource implements WatchDataSource {
     @Override
     public void getWatches() {
         BusProvider.getDataBusInstance().post(createDefaultWatches());
+        Log.d(Constants.TAG, "Watches sent via Data bus");
     }
 
     public WatchesWrapper createDefaultWatches()  {
