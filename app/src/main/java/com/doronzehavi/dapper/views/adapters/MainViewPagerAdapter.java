@@ -65,7 +65,6 @@ public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        Log.d(Constants.TAG, "Adapter.getCount()");
         if (mWatchList != null)
             return mWatchList.size();
         return 0;

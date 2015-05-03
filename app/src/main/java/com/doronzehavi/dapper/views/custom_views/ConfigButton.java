@@ -3,6 +3,8 @@ package com.doronzehavi.dapper.views.custom_views;
 import android.content.Context;
 import android.widget.ImageButton;
 
+import com.doronzehavi.dapper.R;
+
 /**
  * This will be the base class for buttons in the config fragments.
  * It will hold a image for the button as well as an associated key and value for the particular
@@ -11,6 +13,11 @@ import android.widget.ImageButton;
 public class ConfigButton extends ImageButton {
     private String configKey; // The key that this button will modify
     private int configValue;  // The value of the resource this item represents
+
+
+
+
+
 
     public String getConfigKey() {
         return configKey;

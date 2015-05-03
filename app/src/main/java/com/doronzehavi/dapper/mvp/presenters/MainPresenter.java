@@ -39,7 +39,7 @@ public class MainPresenter extends Presenter{
     }
 
     /**
-     * 3) Watches are received. The presenter now displays them on the view.
+     * 3) Watches are received from the UI bus. The presenter now displays them on the view.
      */
     @Subscribe
     public void onWatchesReceived(WatchesWrapper response) { // receives watches from ui bus

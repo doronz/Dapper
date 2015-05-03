@@ -38,8 +38,11 @@ public class WatchView extends View {
         invalidate();
     }
 
+    /**
+     * Backgrounds loaded only when the WatchView has a new watch set.
+     */
     private void loadBackground(){
-        mBackgroundBitmap = mDataSource.getBackgroundBitmap(mWatch.getBackgroundKey());
+        mBackgroundBitmap = Constants.getBackgroundBitmap(mWatch.getBackgroundKey());
     }
 
     @Override

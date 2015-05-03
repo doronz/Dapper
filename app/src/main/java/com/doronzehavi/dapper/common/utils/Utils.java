@@ -6,6 +6,10 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+
+import com.doronzehavi.dapper.Dapper;
 
 /**
  * Utility methods
@@ -39,5 +43,12 @@ public class Utils {
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
         return output;
+    }
+
+
+    public Drawable getBackgroundDrawable(Bitmap bitmap, int width, int height){
+        return new BitmapDrawable(Dapper.getContext().getResources(),
+                Utils.getCircularBitmap(Bitmap.createScaledBitmap(bitmap,
+                        width, height, true)));
     }
 }

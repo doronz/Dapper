@@ -7,13 +7,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.doronzehavi.dapper.R;
 import com.doronzehavi.dapper.common.utils.Constants;
+import com.doronzehavi.dapper.model.WatchComponent;
 import com.doronzehavi.dapper.model.entities.Watch;
 import com.doronzehavi.dapper.mvp.presenters.ConfigFragmentPresenter;
 import com.doronzehavi.dapper.mvp.views.ConfigView;
+import com.doronzehavi.dapper.views.custom_views.BackgroundConfigButton;
+
+import java.util.Map;
 
 /**
  * This fragment will hold the configuration options for a watch.
@@ -75,11 +81,33 @@ public class WatchConfigFragment extends Fragment implements ConfigView {
         Log.d(Constants.TAG, "WatchConfigFragment: Constructor called.");
     }
 
-
+    View.OnClickListener mConfigButtonClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            // TODO: Update the watch's config.
+        }
+    };
 
     @Override
     public void loadConfig() {
+        GridLayout layout = (GridLayout) getView().findViewById(R.id.watch_background_grid_layout);
         TextView header = (TextView) getView().findViewById(R.id.watch_config_header_text);
-        header.setText("Watch == null?  --" + String.valueOf(mWatch == null).toUpperCase() + "--");
+        header.setText("Watch #" + mWatch.getPosition());
+        for (Map.Entry<String, WatchComponent> bgComp : mWatch.getBackgroundComponents().entrySet()) {
+            BackgroundConfigButton bg_button = new BackgroundConfigButton(getActivity());
+            bg_button.setOnClickListener(mConfigButtonClickListener);
+            bg_button.setConfigKey(Constants.KEY_BACKGROUND);
+            bg_button.setConfigValue(mWatch.getPosition());
+            // Makes the pictures fit perfectly in the center of the button
+            bg_button.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            // Gets the circular drawable version of the background
+            bg_button.setImage(bgComp.getKey());
+            if (mWatch.getBackgroundKey().equals(bgComp.getKey())) {
+                bg_button.setEnabled(false); // disable already chosen background
+            }
+            else {
+                bg_button.setEnabled(true); // enable other options
+            }
+            layout.addView(bg_button);
+        }
     }
 }

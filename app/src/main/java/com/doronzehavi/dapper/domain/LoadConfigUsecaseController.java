@@ -13,7 +13,7 @@ public class LoadConfigUsecaseController implements LoadConfigUsecase {
 
     public LoadConfigUsecaseController(WatchFileDataSource dataSource, Bus uiBus) {
         if (dataSource == null)
-            throw new IllegalArgumentException("MediaDataSource cannot be null");
+            throw new IllegalArgumentException("DataSource cannot be null");
 
         if (uiBus == null)
             throw new IllegalArgumentException("Bus cannot be null");
