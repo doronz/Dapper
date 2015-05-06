@@ -3,37 +3,32 @@ package com.doronzehavi.dapper.views.custom_views;
 import android.content.Context;
 import android.widget.ImageButton;
 
-import com.doronzehavi.dapper.R;
-
 /**
  * This will be the base class for buttons in the config fragments.
  * It will hold a image for the button as well as an associated key and value for the particular
  * component that it represents.
  */
 public class ConfigButton extends ImageButton {
-    private String configKey; // The key that this button will modify
-    private int configValue;  // The value of the resource this item represents
+    private String componentKey; // The key that this button will modify
+    private String componentResourceKey;  //
 
-
-
-
-
-
-    public String getConfigKey() {
-        return configKey;
+    // Getters
+    public String getComponentKey() {
+        return componentKey;
+    }
+    public String getComponentResourceKey() {
+        return componentResourceKey;
     }
 
-    public void setConfigKey(String configKey) {
-        this.configKey = configKey;
+    // Setters
+    public void setComponentKey(String componentKey) {
+        this.componentKey = componentKey;
+    }
+    public void setComponentResourceKey(String componentResourceKey) {
+        this.componentResourceKey = componentResourceKey;
     }
 
-    public int getConfigValue() {
-        return configValue;
-    }
-
-    public void setConfigValue(int configValue) {
-        this.configValue = configValue;
-    }
+    // Constructor
     public ConfigButton(Context context) {
         super(context);
     }

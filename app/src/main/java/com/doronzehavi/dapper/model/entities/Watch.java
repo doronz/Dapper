@@ -8,12 +8,13 @@ import com.doronzehavi.dapper.model.WatchComponent;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
 /**
  * Maintains the state of a particular watch.
  * Also maintains the possible component options for this watch.
  */
-public class Watch implements Serializable {
+public class Watch extends Observable implements Serializable  {
 
     // Instance variables
     private final int mPosition;
@@ -28,8 +29,6 @@ public class Watch implements Serializable {
     public Watch(int position){
         this.mPosition = position;
         init();
-
-
         Log.d(Constants.TAG, "Watch #" + this.mPosition + " created.");
     }
 
@@ -41,6 +40,21 @@ public class Watch implements Serializable {
                     break;
         }
     }
+
+
+    public void update(String componentKey, String componentResourceKey){
+        if (componentKey.equals(Constants.KEY_BACKGROUND)){
+            this.mBackgroundKey = componentResourceKey;
+            Log.d(Constants.TAG, "Watch updated with new background.");
+        }
+        setChanged();
+        notifyObservers();
+    }
+
+
+
+
+
 
     // Getters
     public String getBackgroundKey() {

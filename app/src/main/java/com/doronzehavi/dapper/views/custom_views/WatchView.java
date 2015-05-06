@@ -12,10 +12,13 @@ import com.doronzehavi.dapper.common.utils.Utils;
 import com.doronzehavi.dapper.model.data.WatchFileDataSource;
 import com.doronzehavi.dapper.model.entities.Watch;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * Draws a WatchView
  */
-public class WatchView extends View {
+public class WatchView extends View implements Observer{
 
     private Watch mWatch;
     private final WatchFileDataSource mDataSource;
@@ -30,12 +33,13 @@ public class WatchView extends View {
 
     /**
      * Called when a WatchViewFragment is created.
-     * @param mWatch the watch the fragment wants drawn
+     * @param watch the watch the fragment wants drawn
      */
-    public void setWatch(Watch mWatch) {
-        this.mWatch = mWatch;
-        loadBackground();
+    public void setWatch(Watch watch) {
+        mWatch = watch;
         invalidate();
+        Log.d(Constants.TAG, "Adding this WatchView as an observer.");
+        mWatch.addObserver(this);
     }
 
     /**
@@ -48,6 +52,7 @@ public class WatchView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        loadBackground();
         if (mWatch != null && mBackgroundBitmap != null){
             Log.d(Constants.TAG, "Drawing watch!");
             drawWatch(canvas, canvas.getWidth(), canvas.getHeight());
@@ -58,12 +63,15 @@ public class WatchView extends View {
     }
 
     private void drawWatch(Canvas canvas, int width, int height) {
-        if (mBackgroundScaledBitmap == null
-                || mBackgroundScaledBitmap.getWidth()  != width
-                || mBackgroundScaledBitmap.getHeight() != height) {
-            mBackgroundScaledBitmap = Bitmap.createScaledBitmap(mBackgroundBitmap,
-                    width, height, true /* filter */);
-        }
+        mBackgroundScaledBitmap = Bitmap.createScaledBitmap(mBackgroundBitmap,
+                    width, height, true);
         canvas.drawBitmap(Utils.getCircularBitmap(mBackgroundScaledBitmap), 0, 0, null);
     }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        Log.d(Constants.TAG, "WatchView calling invalidate()");
+        invalidate();
+    }
+
 }

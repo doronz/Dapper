@@ -46,6 +46,10 @@ public class Constants {
     /*********************
      *      Watches      *
      ********************/
+
+
+
+
     // Watch #0
     public static final Map<String, WatchComponent> WATCH_0_BACKGROUND_COMPONENTS;
     static
@@ -55,6 +59,10 @@ public class Constants {
         WATCH_0_BACKGROUND_COMPONENTS.put(KEY_BACKGROUND_GOLD, new BackgroundComponent(KEY_BACKGROUND_GOLD));
     }
     public static final String WATCH_0_DEFAULT_BACKGROUND_KEY = KEY_BACKGROUND_GRAY;
+
+
+
+
     // Watch #1
     public static final Map<String, WatchComponent> WATCH_1_BACKGROUND_COMPONENTS;
     static
@@ -64,6 +72,10 @@ public class Constants {
         WATCH_1_BACKGROUND_COMPONENTS.put(KEY_BACKGROUND_GOLD, new BackgroundComponent(KEY_BACKGROUND_GOLD));
     }
     public static final String WATCH_1_DEFAULT_BACKGROUND_KEY = KEY_BACKGROUND_GOLD;
+
+
+
+
 
     public static final String KEY_BACKGROUND = "key_background";
 

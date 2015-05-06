@@ -18,6 +18,7 @@ import com.doronzehavi.dapper.model.entities.Watch;
 import com.doronzehavi.dapper.mvp.presenters.ConfigFragmentPresenter;
 import com.doronzehavi.dapper.mvp.views.ConfigView;
 import com.doronzehavi.dapper.views.custom_views.BackgroundConfigButton;
+import com.doronzehavi.dapper.views.custom_views.ConfigButton;
 
 import java.util.Map;
 
@@ -83,7 +84,14 @@ public class WatchConfigFragment extends Fragment implements ConfigView {
 
     View.OnClickListener mConfigButtonClickListener = new View.OnClickListener() {
         public void onClick(View v) {
-            // TODO: Update the watch's config.
+            // Find out which component of the watch needs to be modified
+            ConfigButton button = (ConfigButton) v;
+            String componentKey = button.getComponentKey();
+            // Find out what resource it needs to be modified with
+            String componentResourceKey = button.getComponentResourceKey();
+            // Update the watch's configuration
+            Log.d(Constants.TAG, "ConfigButton clicked: " + componentKey + ":" + componentResourceKey);
+            mWatch.update(componentKey, componentResourceKey );
         }
     };
 
@@ -95,8 +103,8 @@ public class WatchConfigFragment extends Fragment implements ConfigView {
         for (Map.Entry<String, WatchComponent> bgComp : mWatch.getBackgroundComponents().entrySet()) {
             BackgroundConfigButton bg_button = new BackgroundConfigButton(getActivity());
             bg_button.setOnClickListener(mConfigButtonClickListener);
-            bg_button.setConfigKey(Constants.KEY_BACKGROUND);
-            bg_button.setConfigValue(mWatch.getPosition());
+            bg_button.setComponentKey(Constants.KEY_BACKGROUND);
+            bg_button.setComponentResourceKey(bgComp.getValue().getKey());
             // Makes the pictures fit perfectly in the center of the button
             bg_button.setScaleType(ImageView.ScaleType.FIT_CENTER);
             // Gets the circular drawable version of the background
