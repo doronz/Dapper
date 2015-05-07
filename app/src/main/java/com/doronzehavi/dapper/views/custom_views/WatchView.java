@@ -9,7 +9,6 @@ import android.view.View;
 
 import com.doronzehavi.dapper.common.utils.Constants;
 import com.doronzehavi.dapper.common.utils.Utils;
-import com.doronzehavi.dapper.model.data.WatchFileDataSource;
 import com.doronzehavi.dapper.model.entities.Watch;
 
 import java.util.Observable;
@@ -21,14 +20,11 @@ import java.util.Observer;
 public class WatchView extends View implements Observer{
 
     private Watch mWatch;
-    private final WatchFileDataSource mDataSource;
 
-    private Bitmap mBackgroundScaledBitmap;
     private Bitmap mBackgroundBitmap;
 
     public WatchView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mDataSource = WatchFileDataSource.getInstance();
     }
 
     /**
@@ -63,8 +59,8 @@ public class WatchView extends View implements Observer{
     }
 
     private void drawWatch(Canvas canvas, int width, int height) {
-        mBackgroundScaledBitmap = Bitmap.createScaledBitmap(mBackgroundBitmap,
-                    width, height, true);
+        Bitmap mBackgroundScaledBitmap = Bitmap.createScaledBitmap(mBackgroundBitmap,
+                width, height, true);
         canvas.drawBitmap(Utils.getCircularBitmap(mBackgroundScaledBitmap), 0, 0, null);
     }
 
