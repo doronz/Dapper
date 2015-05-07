@@ -1,5 +1,6 @@
 package com.doronzehavi.dapper.common.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -8,8 +9,19 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.doronzehavi.dapper.Dapper;
+import com.doronzehavi.dapper.model.entities.Watch;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Utility methods
@@ -46,9 +58,43 @@ public class Utils {
     }
 
 
-    public Drawable getBackgroundDrawable(Bitmap bitmap, int width, int height){
+    public static Drawable getBackgroundDrawable(Bitmap bitmap, int width, int height){
         return new BitmapDrawable(Dapper.getContext().getResources(),
                 Utils.getCircularBitmap(Bitmap.createScaledBitmap(bitmap,
                         width, height, true)));
+    }
+
+     public static void saveWatchesToFile(List<Watch> watches){
+         try {
+             FileOutputStream fos = Dapper.getContext().openFileOutput(Constants.USER_DATA_PATH, Context.MODE_PRIVATE);
+             ObjectOutputStream os = new ObjectOutputStream (fos);
+             os.writeObject(watches);
+             fos.close();
+             os.close();
+             Log.d(Constants.TAG, "Watches saved successfully.");
+         } catch (Exception ex) {
+             Log.e(Constants.TAG, "Error: Unable to save watches to file! - " + ex.getMessage());
+             ex.printStackTrace ();
+         }
+    }
+
+    public static boolean userFileExists(){
+        File userFile = Dapper.getContext().getFileStreamPath(Constants.USER_DATA_PATH);
+        boolean exists = userFile.exists();
+        Log.d(Constants.TAG, "User file exists: " + exists);
+        return exists;
+    }
+
+    public static List<Watch> loadWatchesFromFile() throws IOException {
+        FileInputStream fis = Dapper.getContext().openFileInput(Constants.USER_DATA_PATH);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        List<Watch> watches = null;
+        try {
+            watches = (ArrayList<Watch>) ois.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        ois.close();
+        return watches;
     }
 }

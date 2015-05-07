@@ -44,6 +44,9 @@ public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
        return mWatchViewFragmentList.get(position);
     }
 
+    public List<Watch> getWatchList() {
+        return mWatchList;
+    }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {

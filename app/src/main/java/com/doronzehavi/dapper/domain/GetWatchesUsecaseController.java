@@ -18,11 +18,6 @@ public class GetWatchesUsecaseController implements GetWatchesUsecase {
 
 
     public GetWatchesUsecaseController(WatchDataSource dataSource, Bus uiBus) {
-        if (dataSource == null)
-            throw new IllegalArgumentException("MediaDataSource cannot be null");
-
-        if (uiBus == null)
-            throw new IllegalArgumentException("Bus cannot be null");
         mDataSource = dataSource;
         mUiBus = uiBus;
         /**

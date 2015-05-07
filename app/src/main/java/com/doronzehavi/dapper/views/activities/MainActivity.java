@@ -10,11 +10,14 @@ import android.widget.ProgressBar;
 
 import com.doronzehavi.dapper.R;
 import com.doronzehavi.dapper.common.utils.Constants;
+import com.doronzehavi.dapper.model.entities.Watch;
 import com.doronzehavi.dapper.model.entities.WatchesWrapper;
 import com.doronzehavi.dapper.mvp.presenters.MainPresenter;
 import com.doronzehavi.dapper.mvp.views.MainView;
 import com.doronzehavi.dapper.views.adapters.MainViewPagerAdapter;
 import com.doronzehavi.dapper.views.fragments.WatchConfigFragment;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -61,6 +64,7 @@ public class MainActivity extends ActionBarActivity implements MainView {
         }
     }
 
+
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -88,7 +92,7 @@ public class MainActivity extends ActionBarActivity implements MainView {
         /**
          * This is used to populate the config fragment when watches are loaded.
          */
-        mPager.post(new Runnable(){
+        mPager.post(new Runnable() {
             @Override
             public void run() {
                 pageChangeListener.onPageSelected(mPager.getCurrentItem());
@@ -104,6 +108,12 @@ public class MainActivity extends ActionBarActivity implements MainView {
                 WatchConfigFragment.newInstance(mAdapter.getFragment(position).getWatch()))
                 .commit();
     }
+
+    @Override
+    public List<Watch> getWatches() {
+        return mAdapter.getWatchList();
+    }
+
 
     @Override
     protected void onStart() { // This is where the action starts.

@@ -3,7 +3,10 @@ package com.doronzehavi.dapper.mvp.presenters;
 import android.util.Log;
 
 import com.doronzehavi.dapper.common.utils.BusProvider;
+import com.doronzehavi.dapper.common.utils.Constants;
+import com.doronzehavi.dapper.common.utils.Utils;
 import com.doronzehavi.dapper.domain.GetWatchesUsecaseController;
+import com.doronzehavi.dapper.domain.SaveWatchesUsecaseController;
 import com.doronzehavi.dapper.model.data.WatchFileDataSource;
 import com.doronzehavi.dapper.model.entities.WatchesWrapper;
 import com.doronzehavi.dapper.mvp.views.MainView;
@@ -25,6 +28,7 @@ public class MainPresenter extends Presenter{
          */
         mGetWatches = new GetWatchesUsecaseController(
                 WatchFileDataSource.getInstance(), BusProvider.getUIBusInstance());
+
     }
 
     /**
@@ -32,7 +36,7 @@ public class MainPresenter extends Presenter{
      */
     @Override
     public void start() {
-        Log.d("Dapper", "Presenter started.");
+        Log.d(Constants.TAG, "Presenter started.");
         BusProvider.getUIBusInstance().register(this);
         mMainView.showLoading();
         mGetWatches.execute();
@@ -43,13 +47,23 @@ public class MainPresenter extends Presenter{
      */
     @Subscribe
     public void onWatchesReceived(WatchesWrapper response) { // receives watches from ui bus
-        Log.d("Dapper", "Presenter received watches.");
+        Log.d(Constants.TAG, "Presenter received watches.");
         mMainView.showWatches(response);
         mMainView.hideLoading();
+        if(!Utils.userFileExists()){
+            SaveWatchesUsecaseController mSaveWatches =
+                    new SaveWatchesUsecaseController( response.getWatches(),WatchFileDataSource.getInstance());
+            mSaveWatches.execute();
+        }
     }
 
     @Override
     public void stop() {
         BusProvider.getUIBusInstance().unregister(this);
     }
+
+
+
+
+
 }

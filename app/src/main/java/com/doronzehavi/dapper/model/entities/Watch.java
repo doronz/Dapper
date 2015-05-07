@@ -3,11 +3,8 @@ package com.doronzehavi.dapper.model.entities;
 import android.util.Log;
 
 import com.doronzehavi.dapper.common.utils.Constants;
-import com.doronzehavi.dapper.model.WatchComponent;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 
 /**
@@ -17,28 +14,21 @@ import java.util.Observable;
 public class Watch extends Observable implements Serializable  {
 
     // Instance variables
-    private final int mPosition;
+    private int mPosition;
     private String mBackgroundKey;
 
-    // All available components for this watch.
-    private List<List<WatchComponent>> mComponents;
-    // All available backgrounds for this watch.
-    private Map<String, WatchComponent> mBackgroundComponents;
-
     // Constructor
+    public Watch(){
+
+    }
     public Watch(int position){
         this.mPosition = position;
-        init();
         Log.d(Constants.TAG, "Watch #" + this.mPosition + " created.");
     }
 
-    private void init(){
-        switch(mPosition) {
-            case 0: mBackgroundComponents = Constants.WATCH_0_BACKGROUND_COMPONENTS;
-                    break;
-            case 1: mBackgroundComponents = Constants.WATCH_1_BACKGROUND_COMPONENTS;
-                    break;
-        }
+    public Watch(int position, String backgroundKey){
+        this.mPosition = position;
+        this.mBackgroundKey = backgroundKey;
     }
 
 
@@ -70,10 +60,5 @@ public class Watch extends Observable implements Serializable  {
     public int getPosition() {
         return mPosition;
     }
-
-    public Map<String, WatchComponent> getBackgroundComponents() {
-        return mBackgroundComponents;
-    }
-
 
 }

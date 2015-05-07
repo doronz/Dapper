@@ -17,8 +17,7 @@ import java.util.Map;
 public class Constants {
 
     public static final String TAG = "Dapper";
-
-    public static final String USER_DATA_PATH = "user_data.ser";
+    public static final String USER_DATA_PATH = "udata.ser";
     public static final String KEY_WATCH = "watch";
 
     /********************
@@ -72,6 +71,24 @@ public class Constants {
         WATCH_1_BACKGROUND_COMPONENTS.put(KEY_BACKGROUND_GOLD, new BackgroundComponent(KEY_BACKGROUND_GOLD));
     }
     public static final String WATCH_1_DEFAULT_BACKGROUND_KEY = KEY_BACKGROUND_GOLD;
+
+    /**
+     * Array of background components for all the watches
+     */
+
+    public static final Map<String, WatchComponent>[] BACKGROUND_OPTIONS;
+    static
+    {
+        BACKGROUND_OPTIONS = new HashMap[2];
+        BACKGROUND_OPTIONS[0] = WATCH_0_BACKGROUND_COMPONENTS;
+        BACKGROUND_OPTIONS[1] = WATCH_1_BACKGROUND_COMPONENTS;
+    }
+
+
+
+
+
+
 
 
 

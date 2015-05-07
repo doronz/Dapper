@@ -91,16 +91,22 @@ public class WatchConfigFragment extends Fragment implements ConfigView {
             String componentResourceKey = button.getComponentResourceKey();
             // Update the watch's configuration
             Log.d(Constants.TAG, "ConfigButton clicked: " + componentKey + ":" + componentResourceKey);
-            mWatch.update(componentKey, componentResourceKey );
+            mWatch.update(componentKey, componentResourceKey);
+            loadBackgroundOptions();
         }
     };
 
     @Override
     public void loadConfig() {
-        GridLayout layout = (GridLayout) getView().findViewById(R.id.watch_background_grid_layout);
-        TextView header = (TextView) getView().findViewById(R.id.watch_config_header_text);
+        TextView header = (TextView) mContainer.findViewById(R.id.watch_config_header_text);
         header.setText("Watch #" + mWatch.getPosition());
-        for (Map.Entry<String, WatchComponent> bgComp : mWatch.getBackgroundComponents().entrySet()) {
+        loadBackgroundOptions();
+    }
+
+    private void loadBackgroundOptions(){
+        GridLayout layout = (GridLayout) mContainer.findViewById(R.id.watch_background_grid_layout);
+        layout.removeAllViews();
+        for (Map.Entry<String, WatchComponent> bgComp : Constants.BACKGROUND_OPTIONS[mWatch.getPosition()].entrySet()) {
             BackgroundConfigButton bg_button = new BackgroundConfigButton(getActivity());
             bg_button.setOnClickListener(mConfigButtonClickListener);
             bg_button.setComponentKey(Constants.KEY_BACKGROUND);
