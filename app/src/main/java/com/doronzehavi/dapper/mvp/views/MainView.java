@@ -19,4 +19,6 @@ public interface MainView {
     void updateMainFrag(int position);
 
     List<Watch> getWatches();
+
+    void saveWatches();
 }

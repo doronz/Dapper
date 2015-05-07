@@ -60,6 +60,7 @@ public class MainPresenter extends Presenter{
     @Override
     public void stop() {
         BusProvider.getUIBusInstance().unregister(this);
+        mMainView.saveWatches();
     }
 
 

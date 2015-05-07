@@ -67,7 +67,7 @@ public class Utils {
      public static void saveWatchesToFile(List<Watch> watches){
          try {
              FileOutputStream fos = Dapper.getContext().openFileOutput(Constants.USER_DATA_PATH, Context.MODE_PRIVATE);
-             ObjectOutputStream os = new ObjectOutputStream (fos);
+             ObjectOutputStream os = new ObjectOutputStream(fos);
              os.writeObject(watches);
              fos.close();
              os.close();

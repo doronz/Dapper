@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 
 import com.doronzehavi.dapper.R;
 import com.doronzehavi.dapper.common.utils.Constants;
+import com.doronzehavi.dapper.common.utils.Utils;
 import com.doronzehavi.dapper.model.entities.Watch;
 import com.doronzehavi.dapper.model.entities.WatchesWrapper;
 import com.doronzehavi.dapper.mvp.presenters.MainPresenter;
@@ -112,6 +113,11 @@ public class MainActivity extends ActionBarActivity implements MainView {
     @Override
     public List<Watch> getWatches() {
         return mAdapter.getWatchList();
+    }
+
+    @Override
+    public void saveWatches() {
+        Utils.saveWatchesToFile(getWatches());
     }
 
 
