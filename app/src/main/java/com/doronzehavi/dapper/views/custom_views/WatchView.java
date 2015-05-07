@@ -32,16 +32,11 @@ public class WatchView extends View implements Observer{
         super(context, attrs);
     }
 
-    /**
-     * Called when a WatchViewFragment is created.
-     * @param watch the watch the fragment wants drawn
-     */
     public void setWatch(Watch watch) {
         mWatch = watch;
         invalidate();
         mWatch.addObserver(this);
     }
-
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -53,7 +48,6 @@ public class WatchView extends View implements Observer{
         drawBackground(canvas, width, height);
         drawWatchHands(canvas, width, height);
     }
-
 
     @Override
     public void update(Observable observable, Object data) {

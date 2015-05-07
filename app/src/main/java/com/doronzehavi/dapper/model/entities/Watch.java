@@ -31,14 +31,17 @@ public class Watch extends Observable implements Serializable  {
     public void update(String componentKey, String componentResourceKey){
         if (componentKey.equals(Constants.KEY_BACKGROUND)){
             this.mBackgroundKey = componentResourceKey;
+            setChanged();
+            notifyObservers(Constants.KEY_BACKGROUND);
             Log.d(Constants.TAG, "Watch updated with new background.");
         }
         else if (componentKey.equals(Constants.KEY_WATCHHAND)){
             this.mWatchHandKey = componentResourceKey;
+            setChanged();
+            notifyObservers(Constants.KEY_WATCHHAND);
             Log.d(Constants.TAG, "Watch updated with new watch hands.");
         }
-        setChanged();
-        notifyObservers();
+
     }
 
 
