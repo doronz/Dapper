@@ -7,6 +7,7 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.doronzehavi.dapper.common.utils.Constants;
 import com.doronzehavi.dapper.common.utils.WatchDetails;
 import com.doronzehavi.dapper.model.entities.BackgroundComponent;
 import com.doronzehavi.dapper.model.entities.Watch;
@@ -24,7 +25,8 @@ import java.util.TimerTask;
 public class WatchView extends View implements Observer{
 
     private Watch mWatch;
-
+    private BackgroundComponent mBackground;
+    private WatchHandComponent mWatchHands;
     private Timer mTimer;
 
 
@@ -34,6 +36,8 @@ public class WatchView extends View implements Observer{
 
     public void setWatch(Watch watch) {
         mWatch = watch;
+        mBackground = WatchDetails.MAP_KEY_TO_BG_COMP.get(mWatch.getBackgroundKey());
+        mWatchHands = WatchDetails.MAP_KEY_TO_WATCHHAND_COMP.get(mWatch.getWatchHandKey());
         invalidate();
         mWatch.addObserver(this);
     }
@@ -51,18 +55,22 @@ public class WatchView extends View implements Observer{
 
     @Override
     public void update(Observable observable, Object data) {
+        if (data != null){
+            if (data.equals(Constants.KEY_BACKGROUND))
+                mBackground = WatchDetails.MAP_KEY_TO_BG_COMP.get(mWatch.getBackgroundKey());
+            else if (data.equals(Constants.KEY_WATCHHAND))
+                mWatchHands = WatchDetails.MAP_KEY_TO_WATCHHAND_COMP.get(mWatch.getWatchHandKey());
+        }
         invalidate();
     }
 
     // TODO: Draw the background once. Only draw again if it is a different background.
     private void drawBackground(Canvas canvas, int width, int height){
-        BackgroundComponent background = WatchDetails.MAP_KEY_TO_BG_COMP.get(mWatch.getBackgroundKey());
-        background.draw(canvas, width, height);
+        mBackground.draw(canvas, width, height);
     }
 
     private void drawWatchHands(Canvas canvas, int width, int height) {
-        WatchHandComponent watchHands = WatchDetails.MAP_KEY_TO_WATCHHAND_COMP.get(mWatch.getWatchHandKey());
-        watchHands.draw(canvas, width, height);
+        mWatchHands.draw(canvas, width, height);
     }
 
     protected Handler handler = new Handler()
