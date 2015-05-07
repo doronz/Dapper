@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.doronzehavi.dapper.common.utils.Constants;
-import com.doronzehavi.dapper.common.utils.Utils;
 import com.doronzehavi.dapper.model.entities.Watch;
 
 import java.util.Observable;
@@ -20,6 +19,9 @@ import java.util.Observer;
 public class WatchView extends View implements Observer{
 
     private Watch mWatch;
+
+
+
 
     private Bitmap mBackgroundBitmap;
 
@@ -38,36 +40,25 @@ public class WatchView extends View implements Observer{
         mWatch.addObserver(this);
     }
 
-    /**
-     * Backgrounds loaded only when the WatchView has a new watch set.
-     */
-    private void loadBackground(){
-        mBackgroundBitmap = Constants.getBackgroundBitmap(mWatch.getBackgroundKey());
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        loadBackground();
-        if (mWatch != null && mBackgroundBitmap != null){
-            Log.d(Constants.TAG, "Drawing watch!");
-            drawWatch(canvas, canvas.getWidth(), canvas.getHeight());
-        }
-        else {
-            Log.e(Constants.TAG, "Either mWatch or mBackgroundBitmap are null in onDraw!");
-        }
+        drawWatch(canvas, canvas.getWidth(), canvas.getHeight());
     }
 
     private void drawWatch(Canvas canvas, int width, int height) {
-        Bitmap mBackgroundScaledBitmap = Bitmap.createScaledBitmap(mBackgroundBitmap,
-                width, height, true);
-        canvas.drawBitmap(Utils.getCircularBitmap(mBackgroundScaledBitmap), 0, 0, null);
+        drawBackground(canvas, width, height);
     }
 
     @Override
     public void update(Observable observable, Object data) {
         Log.d(Constants.TAG, "WatchView calling invalidate()");
         invalidate();
+    }
+
+    private void drawBackground(Canvas canvas, int width, int height){
+        Constants.MAP_KEY_TO_BG_COMP.get(mWatch.getBackgroundKey()).draw(canvas, width, height);
     }
 
 }

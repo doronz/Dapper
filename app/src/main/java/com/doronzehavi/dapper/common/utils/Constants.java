@@ -42,6 +42,14 @@ public class Constants {
         MAP_KEY_TO_RES.put(KEY_BACKGROUND_GOLD, RES_BACKGROUND_GOLD);
     }
 
+    public static final Map<String, BackgroundComponent> MAP_KEY_TO_BG_COMP;
+    static
+    {
+        MAP_KEY_TO_BG_COMP = new HashMap<>();
+        MAP_KEY_TO_BG_COMP.put(KEY_BACKGROUND_GRAY, new BackgroundComponent(KEY_BACKGROUND_GRAY));
+        MAP_KEY_TO_BG_COMP.put(KEY_BACKGROUND_GOLD, new BackgroundComponent(KEY_BACKGROUND_GOLD));
+    }
+
     /*********************
      *      Watches      *
      ********************/
@@ -54,8 +62,8 @@ public class Constants {
     static
     {
         WATCH_0_BACKGROUND_COMPONENTS = new HashMap<>();
-        WATCH_0_BACKGROUND_COMPONENTS.put(KEY_BACKGROUND_GRAY, new BackgroundComponent(KEY_BACKGROUND_GRAY));
-        WATCH_0_BACKGROUND_COMPONENTS.put(KEY_BACKGROUND_GOLD, new BackgroundComponent(KEY_BACKGROUND_GOLD));
+        WATCH_0_BACKGROUND_COMPONENTS.put(KEY_BACKGROUND_GRAY, MAP_KEY_TO_BG_COMP.get(KEY_BACKGROUND_GRAY));
+        WATCH_0_BACKGROUND_COMPONENTS.put(KEY_BACKGROUND_GOLD, MAP_KEY_TO_BG_COMP.get(KEY_BACKGROUND_GOLD));
     }
     public static final String WATCH_0_DEFAULT_BACKGROUND_KEY = KEY_BACKGROUND_GRAY;
 
@@ -67,15 +75,14 @@ public class Constants {
     static
     {
         WATCH_1_BACKGROUND_COMPONENTS = new HashMap<>();
-        WATCH_1_BACKGROUND_COMPONENTS.put(KEY_BACKGROUND_GRAY, new BackgroundComponent(KEY_BACKGROUND_GRAY));
-        WATCH_1_BACKGROUND_COMPONENTS.put(KEY_BACKGROUND_GOLD, new BackgroundComponent(KEY_BACKGROUND_GOLD));
+        WATCH_1_BACKGROUND_COMPONENTS.put(KEY_BACKGROUND_GRAY, MAP_KEY_TO_BG_COMP.get(KEY_BACKGROUND_GRAY));
+        WATCH_1_BACKGROUND_COMPONENTS.put(KEY_BACKGROUND_GOLD, MAP_KEY_TO_BG_COMP.get(KEY_BACKGROUND_GOLD));
     }
     public static final String WATCH_1_DEFAULT_BACKGROUND_KEY = KEY_BACKGROUND_GOLD;
 
     /**
-     * Array of background components for all the watches
+     * Array of background components for each watch
      */
-
     public static final Map<String, WatchComponent>[] BACKGROUND_OPTIONS;
     static
     {
