@@ -16,19 +16,15 @@ public class Watch extends Observable implements Serializable  {
     // Instance variables
     private int mPosition;
     private String mBackgroundKey;
+    private String mWatchHandKey;
 
     // Constructor
-    public Watch(){
 
-    }
-    public Watch(int position){
-        this.mPosition = position;
-        Log.d(Constants.TAG, "Watch #" + this.mPosition + " created.");
-    }
 
-    public Watch(int position, String backgroundKey){
+    public Watch(int position, String backgroundKey, String watchHandKey){
         this.mPosition = position;
         this.mBackgroundKey = backgroundKey;
+        this.mWatchHandKey = watchHandKey;
     }
 
 
@@ -36,6 +32,10 @@ public class Watch extends Observable implements Serializable  {
         if (componentKey.equals(Constants.KEY_BACKGROUND)){
             this.mBackgroundKey = componentResourceKey;
             Log.d(Constants.TAG, "Watch updated with new background.");
+        }
+        else if (componentKey.equals(Constants.KEY_WATCHHAND)){
+            this.mWatchHandKey = componentResourceKey;
+            Log.d(Constants.TAG, "Watch updated with new watch hands.");
         }
         setChanged();
         notifyObservers();
@@ -48,17 +48,13 @@ public class Watch extends Observable implements Serializable  {
 
     // Getters
     public String getBackgroundKey() {
-        if (mBackgroundKey == null) {
-            switch(mPosition) {
-                case 0: mBackgroundKey = Constants.WATCH_0_DEFAULT_BACKGROUND_KEY;
-                        break;
-                case 1: mBackgroundKey = Constants.WATCH_1_DEFAULT_BACKGROUND_KEY;
-            }
-        }
         return mBackgroundKey;
     }
     public int getPosition() {
         return mPosition;
     }
 
+    public String getWatchHandKey() {
+        return mWatchHandKey;
+    }
 }

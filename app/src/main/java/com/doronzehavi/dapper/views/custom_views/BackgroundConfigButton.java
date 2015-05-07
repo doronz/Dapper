@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 
 import com.doronzehavi.dapper.Dapper;
 import com.doronzehavi.dapper.R;
-import com.doronzehavi.dapper.common.utils.Constants;
 import com.doronzehavi.dapper.common.utils.Utils;
 
 /**
@@ -25,7 +24,7 @@ public class BackgroundConfigButton extends ConfigButton {
 
     private Drawable getBackgroundDrawable(String key, int width, int height){
         return new BitmapDrawable(Dapper.getContext().getResources(),
-                Utils.getCircularBitmap(Bitmap.createScaledBitmap(Constants.getBackgroundBitmap(key),
+                Utils.getCircularBitmap(Bitmap.createScaledBitmap(Utils.getBackgroundBitmap(key),
                         width, height, true)));
     }
 }

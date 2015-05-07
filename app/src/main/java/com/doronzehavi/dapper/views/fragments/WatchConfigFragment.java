@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.doronzehavi.dapper.R;
 import com.doronzehavi.dapper.common.utils.Constants;
+import com.doronzehavi.dapper.common.utils.WatchDetails;
 import com.doronzehavi.dapper.model.WatchComponent;
 import com.doronzehavi.dapper.model.entities.Watch;
 import com.doronzehavi.dapper.mvp.presenters.ConfigFragmentPresenter;
@@ -106,7 +107,7 @@ public class WatchConfigFragment extends Fragment implements ConfigView {
     private void loadBackgroundOptions(){
         GridLayout layout = (GridLayout) mContainer.findViewById(R.id.watch_background_grid_layout);
         layout.removeAllViews();
-        for (Map.Entry<String, WatchComponent> bgComp : Constants.BACKGROUND_OPTIONS[mWatch.getPosition()].entrySet()) {
+        for (Map.Entry<String, WatchComponent> bgComp : WatchDetails.BACKGROUND_OPTIONS[mWatch.getPosition()].entrySet()) {
             BackgroundConfigButton bg_button = new BackgroundConfigButton(getActivity());
             bg_button.setOnClickListener(mConfigButtonClickListener);
             bg_button.setComponentKey(Constants.KEY_BACKGROUND);

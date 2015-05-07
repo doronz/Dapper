@@ -2,6 +2,7 @@ package com.doronzehavi.dapper.common.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -21,7 +22,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Utility methods
@@ -96,5 +99,27 @@ public class Utils {
         }
         ois.close();
         return watches;
+    }
+
+    // Takes a key, gives a bitmap.
+    private static final Map<String, Bitmap> MAP_BACKGROUND = new HashMap<>();
+
+    /**
+     * The bitmaps are only initalized when they are first requested.
+     */
+    public static Bitmap getBackgroundBitmap(String key){
+        // 1) If not initialized, initialize it.
+        if (!MAP_BACKGROUND.containsKey(key)){
+            initBitmapBackground(key);
+        }
+        return MAP_BACKGROUND.get(key);
+    }
+
+    private static Bitmap initBitmapBackground(String key) {
+        int res = WatchDetails.MAP_KEY_TO_RES.get(key);
+        Bitmap bitmap = BitmapFactory.decodeResource(Dapper.getContext().getResources(),
+                res);
+        MAP_BACKGROUND.put(key, bitmap);
+        return bitmap;
     }
 }

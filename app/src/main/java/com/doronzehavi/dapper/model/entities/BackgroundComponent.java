@@ -3,7 +3,6 @@ package com.doronzehavi.dapper.model.entities;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-import com.doronzehavi.dapper.common.utils.Constants;
 import com.doronzehavi.dapper.common.utils.Utils;
 import com.doronzehavi.dapper.model.WatchComponent;
 
@@ -17,9 +16,8 @@ public class BackgroundComponent extends WatchComponent implements Serializable 
         key = backgroundKey;
     }
 
-    @Override
     public void draw(Canvas canvas, int width, int height) {
-        Bitmap backgroundScaledBitmap = Bitmap.createScaledBitmap(Constants.getBackgroundBitmap(key),
+        Bitmap backgroundScaledBitmap = Bitmap.createScaledBitmap(Utils.getBackgroundBitmap(key),
                 width, height, true);
         canvas.drawBitmap(Utils.getCircularBitmap(backgroundScaledBitmap), 0, 0, null);
     }

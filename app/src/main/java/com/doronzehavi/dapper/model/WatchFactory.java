@@ -1,6 +1,6 @@
 package com.doronzehavi.dapper.model;
 
-import com.doronzehavi.dapper.common.utils.Constants;
+import com.doronzehavi.dapper.common.utils.WatchDetails;
 import com.doronzehavi.dapper.model.entities.Watch;
 
 import java.util.ArrayList;
@@ -33,14 +33,14 @@ public class WatchFactory {
      * - Position: 0
      * - Compatible backgrounds: bg
      */
-    Watch BASIC_WATCH = new Watch(0, Constants.WATCH_0_DEFAULT_BACKGROUND_KEY);
+    Watch BASIC_WATCH = new Watch(0, WatchDetails.WATCH_0_DEFAULT_BACKGROUND_KEY, WatchDetails.WATCH_0_DEFAULT_WATCHHAND_KEY);
 
     /**
      * Gold Watch
      * - Position: 1
      * - Compatible backgrounds: bg2
      */
-    Watch GOLD_WATCH = new Watch(1, Constants.WATCH_1_DEFAULT_BACKGROUND_KEY);
+    Watch GOLD_WATCH = new Watch(1, WatchDetails.WATCH_1_DEFAULT_BACKGROUND_KEY, WatchDetails.WATCH_1_DEFAULT_WATCHHAND_KEY);
 
 
     private static WatchFactory INSTANCE;
